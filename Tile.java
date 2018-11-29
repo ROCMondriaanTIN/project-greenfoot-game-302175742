@@ -11,7 +11,7 @@ public class Tile extends Actor {
     private static int id;
     public int _id;
 
-    /**
+/**
      * Contructor of the tile. Creates a tile based on image, width and height
      *
      * @param image Path to the image file
