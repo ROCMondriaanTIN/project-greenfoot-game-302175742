@@ -11,38 +11,44 @@ private final double acc;
 private final double drag;
 private final GreenfootImage staand= new GreenfootImage("staand.png");
 
-private final GreenfootImage loop2= new GreenfootImage("p1_walk01.png");
-private final GreenfootImage loop3= new GreenfootImage("p1_walk02.png");
-private final GreenfootImage loop4= new GreenfootImage("p1_walk03.png");
-private final GreenfootImage loop5= new GreenfootImage("p1_walk04.png");
-private final GreenfootImage loop6= new GreenfootImage("p1_walk05.png");
-private final GreenfootImage loop7= new GreenfootImage("p1_walk06.png");
-private final GreenfootImage loop8= new GreenfootImage("p1_walk07.png");
-private final GreenfootImage loop9= new GreenfootImage("p1_walk08.png");
-private final GreenfootImage loop10= new GreenfootImage("p1_walk09.png");
-private final GreenfootImage loop11= new GreenfootImage("p1_walk10.png");
-private final GreenfootImage loop12= new GreenfootImage("p1_walk11.png");
-private final GreenfootImage staandinv = new GreenfootImage("staandinv.png");
-private final GreenfootImage loopinv1 = new GreenfootImage("p1_rotate01.png");
-private final GreenfootImage loopinv3 = new GreenfootImage("p1_rotate02.png");
-private final GreenfootImage loopinv4 = new GreenfootImage("p1_rotate03.png");
-private final GreenfootImage loopinv5 = new GreenfootImage("p1_rotate04.png");
-private final GreenfootImage loopinv6 = new GreenfootImage("p1_rotate05.png");
-private final GreenfootImage loopinv7 = new GreenfootImage("p1_rotate06.png");
-private final GreenfootImage loopinv8 = new GreenfootImage("p1_rotate07.png");
-private final GreenfootImage loopinv9 = new GreenfootImage("p1_rotate08.png");
-private final GreenfootImage loopinv10 = new GreenfootImage("p1_rotate09.png");
-private final GreenfootImage loopinv11 = new GreenfootImage("p1_rotate10.png");
-private final GreenfootImage loopinv2 = new GreenfootImage("p1_rotate11.png");
-private final GreenfootImage jump = new GreenfootImage("p1_jump.png");
-private final GreenfootImage springen = new GreenfootImage("springen.png");
+ private final GreenfootImage RMidle= new GreenfootImage("p123.png");
+    private final GreenfootImage RMjump= new GreenfootImage("p1_jump.png");
+    private final GreenfootImage RMwalk1= new GreenfootImage("p1_walk01.png");
+    private final GreenfootImage RMwalk2= new GreenfootImage("p1_walk02.png");
+    private final GreenfootImage RMwalk3= new GreenfootImage("p1_walk03.png");
+    private final GreenfootImage RMwalk4= new GreenfootImage("p1_walk04.png");
+    private final GreenfootImage RMwalk5= new GreenfootImage("p1_walk05.png");
+    private final GreenfootImage RMwalk6= new GreenfootImage("p1_walk06.png");
+    private final GreenfootImage RMwalk7= new GreenfootImage("p1_walk07.png");
+    private final GreenfootImage RMwalk8= new GreenfootImage("p1_walk08.png");
+    private final GreenfootImage RMwalk9= new GreenfootImage("p1_walk09.png");
+    private final GreenfootImage RMwalk10= new GreenfootImage("p1_walk10.png");
+    private final GreenfootImage RMwalk11= new GreenfootImage("p1_walk11.png");
+ 
+    private final GreenfootImage LMidle = new GreenfootImage("p123inv.png");
+    private final GreenfootImage LMjump = new GreenfootImage(RMjump);
+    private final GreenfootImage LMwalk1 = new GreenfootImage("p1inv_walk01.png");
+    private final GreenfootImage LMwalk2 = new GreenfootImage("p1inv_walk02.png");
+    private final GreenfootImage LMwalk3 = new GreenfootImage("p1inv_walk03.png");
+    private final GreenfootImage LMwalk4 = new GreenfootImage("p1inv_walk04.png");
+    private final GreenfootImage LMwalk5 = new GreenfootImage("p1inv_walk05.png");
+    private final GreenfootImage LMwalk6 = new GreenfootImage("p1inv_walk06.png");
+    private final GreenfootImage LMwalk7 = new GreenfootImage("p1inv_walk07.png");
+    private final GreenfootImage LMwalk8 = new GreenfootImage("p1inv_walk08.png");
+    private final GreenfootImage LMwalk9 = new GreenfootImage("p1inv_walk09.png");
+    private final GreenfootImage LMwalk10 = new GreenfootImage("p1inv_walk10.png");
+    private final GreenfootImage LMwalk11 = new GreenfootImage("p1inv_walk11.png");
+ 
 
 
+public boolean checkpoint1;
 private int speed = 3;
 private int frame;
 private boolean lopen;
 private boolean Kijkenrechts;
 private boolean isKeyPressed;
+private int x;
+private int y;
 
 
 
@@ -57,36 +63,39 @@ public Hero() {
     gravity = 9.8;
     acc = 0.6;
     drag = 0.8;
-    setImage("staand.png");
-    
-    setImage(jump);
-    lopen = false;
-    Kijkenrechts = true;
-
-    staand.scale(70,100);
-    loop2.scale(70,100);
-    loop3.scale(70,100);
-    loop4.scale(70,100);
-    loop5.scale(70,100);
-    loop6.scale(70,100);
-    loop7.scale(70,100);
-    loop8.scale(70,100);
-    loop9.scale(70,100);
-    loop10.scale(70,100);
-    loop11.scale(70,100);
-
-    jump.scale(70,100);
-    loopinv1.scale(70,100);
-    loopinv2.scale(70,100);
-    loopinv3.scale(70,100);
-    loopinv4.scale(70,100);
-    loopinv5.scale(70,100);
-    loopinv6.scale(70,100);
-    loopinv7.scale(70,100);
-    loopinv8.scale(70,100);
-    loopinv9.scale(70,100);
-    loopinv10.scale(70,100);
-    loopinv11.scale(70,100);
+    setImage("p123.png");
+        
+        setImage(RMidle);
+        lopen = false;
+        Kijkenrechts = true;
+ 
+        RMidle.scale(70,100);
+        RMjump.scale(70,100);
+        RMwalk1.scale(70,100);
+        RMwalk2.scale(70,100);
+        RMwalk3.scale(70,100);
+        RMwalk4.scale(70,100);
+        RMwalk5.scale(70,100);
+        RMwalk6.scale(70,100);
+        RMwalk7.scale(70,100);
+        RMwalk8.scale(70,100);
+        RMwalk9.scale(70,100);
+        RMwalk10.scale(70,100);
+        RMwalk11.scale(70,100);
+ 
+        LMidle.scale(70,100);
+        LMjump.scale(70,100);
+        LMwalk1.scale(70,100);
+        LMwalk2.scale(70,100);
+        LMwalk3.scale(70,100);
+        LMwalk4.scale(70,100);
+        LMwalk5.scale(70,100);
+        LMwalk6.scale(70,100);
+        LMwalk7.scale(70,100);
+        LMwalk8.scale(70,100);
+        LMwalk9.scale(70,100);
+        LMwalk10.scale(70,100);
+        LMwalk11.scale(70,100);
 }
 
 @Override
@@ -104,6 +113,7 @@ public void act() {
         velocityY = gravity;
     }
     applyVelocity();
+    openDeur1();
     
     
    
@@ -132,13 +142,69 @@ public void act() {
             return;
         }
     }
-        
-    
+    for (Actor enemy : getIntersectingObjects(Death.class)) {
+            if (enemy != null) {
+                respawn();
+                
+                break;
+            }
+        }    
+    for ( Actor enemy: getIntersectingObjects(Death.class)){
+        if(enemy != null){
+            setLocation(x,y);
+            return;
+        }
     
     
     
 
 }
+}
+public void respawn()
+{
+    if(checkpoint1 == true){
+    checkpoint1();
+    }
+    else
+    {
+    setLocation(142,5473);
+}
+    
+}
+public void Death()
+{
+    if (isTouching(LavaTile.class))
+    {
+        respawn();
+        
+    }
+    if(isTouching(Water.class))
+    {
+        respawn();
+    }
+}
+public void  checkpoint1()
+    {
+        setLocation(142,5473);
+        
+    }
+    public String positie()
+    {
+    String a= "X"+getX()+"Y"+getY();    
+    
+    return a;
+    }
+    public void checkpoint()
+    {
+        if (isTouching(Checkpoint.class))
+        {
+        x=getX();
+        y=getY();
+        
+        }
+    }
+
+
         public void checkKeys()
 {
     isKeyPressed = false;
@@ -165,7 +231,25 @@ public void act() {
     }
 }
 
-
+public boolean openDeur1()
+    {
+        if (key==true && isTouching(Door.class))
+        {
+            openDeur1 = true;
+            setLocation(142, 5473);
+        }
+        return openDeur1;
+        
+    
+    
+    
+    
+}
+public boolean getOpenDeur()
+     {
+         return openDeur1;
+        }
+        
 public boolean onGround()
 {
     Actor under = getOneObjectAtOffset (0, getHeight ()/2, Tile.class);
@@ -203,55 +287,57 @@ public void handleInput() {
         return getImage().getHeight();
     }
  
-    public void walkRight()
+        public void walkRight()
     {
         lopen = true;
         Kijkenrechts = true;
         frame ++;
         if(frame==1)
         {
-            setImage(staand);
+            setImage(RMidle);
         }
         else if(frame==2)
         {
-            setImage(loop12);
+            setImage(RMwalk1);
         }
         else if(frame==3)
         {
-            setImage(loop2);
+            setImage(RMwalk2);
         }
         else if(frame==4)
         {
-            setImage(loop3);
+            setImage(RMwalk3);
         }
         else if(frame==5)
         {
-            setImage(loop4);
+            setImage(RMwalk4);
         }
         else if(frame==6)
         {
-            setImage(loop5);
+            setImage(RMwalk5);
         }
         else if(frame==7)
         {
-            setImage(loop6);
+            setImage(RMwalk6);
         }
         else if(frame==8)
         {
-            setImage(loop7);
+            setImage(RMwalk7);
         }
         else if(frame==9)
         {
-            setImage(loop8);
+            setImage(RMwalk8);
         }
         else if(frame==10)
         {
-            setImage(loop9);
+            setImage(RMwalk9);
         }
         else if(frame==11)
         {
-            
-            setImage(loop11);
+            setImage(RMwalk10);
+        }
+        else if (frame==12){
+            setImage(RMwalk11);
             frame = 1;
             return;
         }
@@ -264,51 +350,51 @@ public void handleInput() {
         frame ++;
         if(frame==1)
         {
-            setImage(staand);
+            setImage(LMidle);
         }
         else if(frame==2)
         {
-            setImage(loopinv1);
+            setImage(LMwalk1);
         }
         else if(frame==3)
         {
-            setImage(loopinv2);
+            setImage(LMwalk2);
         }
         else if(frame==4)
         {
-            setImage(loopinv3);
+            setImage(LMwalk3);
         }
         else if(frame==5)
         {
-            setImage(loopinv4);
+            setImage(LMwalk4);
         }
        else if(frame==6)
         {
-            setImage(loopinv5);
+            setImage(LMwalk5);
         }
         else if(frame==7)
         {
-            setImage(loopinv6);
+            setImage(LMwalk6);
         }
         else if(frame==8)
         {
-            setImage(loopinv7);
+            setImage(LMwalk7);
         }
         else if(frame==9)
         {
-            setImage(loopinv8);
+            setImage(LMwalk8);
         }
         else if(frame==10)
         {
-            setImage(loopinv9);
+            setImage(LMwalk9);
         }
         else if(frame==11)
         {
-            setImage(loopinv10);
+            setImage(LMwalk10);
         }
         else if (frame==12)
         {
-            setImage(loopinv11);
+            setImage(LMwalk11);
             frame = 1;
             return;
         }
@@ -318,18 +404,21 @@ public void handleInput() {
     {
         lopen = false;
         if (Kijkenrechts)
-            setImage (staand);
+            setImage (RMidle);
         else
-            setImage (staandinv);
+            setImage (LMidle);
         }
-
+        
     
-    public String positie()
-{
-String a= "x" +getX()+"y"+getY();
-return a;
+ public String position()
+ {
+ String a= "x" +getX()+"y"+getY();
+ return a;
+ }
 }
-}
+ 
+ 
+
 
 
     
