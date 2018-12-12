@@ -41,14 +41,14 @@ private final GreenfootImage staand= new GreenfootImage("staand.png");
  
 
 
-public boolean checkpoint1;
+public int checkpoint = 0;
 private int speed = 3;
 private int frame;
 private boolean lopen;
 private boolean Kijkenrechts;
 private boolean isKeyPressed;
-private int x;
-private int y;
+public int x;
+public int y;
 
 
 
@@ -56,6 +56,13 @@ public  boolean key = false;
 public boolean door = false;
 public  boolean openDeur1 = false;
 public  boolean touchDeur1 = false;
+public static double levens = 2;
+public static int munten;
+public boolean munten2;
+public String worldName;
+boolean isDood=false;
+boolean removedBadGuy=false;
+public String actieveWereld;
 
 public Hero() {
     super();
@@ -64,6 +71,8 @@ public Hero() {
     acc = 0.6;
     drag = 0.8;
     setImage("p123.png");
+    
+    this.worldName= worldName;
         
         setImage(RMidle);
         lopen = false;
@@ -106,7 +115,7 @@ public void act() {
     checkKeys();
     onGround();
     }
-    
+    getWorld().showText(getX() + "," + getY(),500,50);
     velocityX *= drag;
     velocityY += acc;
     if (velocityY > gravity) {
@@ -114,23 +123,26 @@ public void act() {
     }
     applyVelocity();
     openDeur1();
+    eatCoins();
     
     
    
     
     
-
+//doodgaan door
     for (Actor enemy : getIntersectingObjects(Enemy.class)) {
         if (enemy != null) {
             //getWorld().removeObject(this);
-           setLocation(400, 1100);
+           
+            respawn();
             break;
         }
     }
     for (Actor enemy : getIntersectingObjects(LavaTile.class)) {
         if (enemy != null) {
             //getWorld().removeObject(this);
-           setLocation(300, 700);
+           
+            respawn();
             return;
         }
     
@@ -138,12 +150,14 @@ public void act() {
     for(Actor enemy : getIntersectingObjects(Water.class)){
         if(enemy != null){
             getWorld().removeObject(this);
-            setLocation(300, 700);
+            
+            respawn();
             return;
         }
     }
     for (Actor enemy : getIntersectingObjects(Death.class)) {
             if (enemy != null) {
+                
                 respawn();
                 
                 break;
@@ -151,7 +165,9 @@ public void act() {
         }    
     for ( Actor enemy: getIntersectingObjects(Death.class)){
         if(enemy != null){
-            setLocation(x,y);
+            
+            respawn();
+            
             return;
         }
     
@@ -160,17 +176,73 @@ public void act() {
 
 }
 }
-public void respawn()
+//wereld naam aangeven
+public void wereld()
 {
-    if(checkpoint1 == true){
-    checkpoint1();
+    if(worldName == "MyWorld"){
+    String actieveWereld="MyWorld"; 
+    }
+    else {
+     String actieveWereld="Level2";    
+    }
+    }
+    // respawn methode met gameover scherm en checkpoints
+public  void respawn()
+{
+    
+    if (levens == 0 )
+    {
+        Greenfoot.setWorld(new GameOver());
+    }
+    else {
+    if(checkpoint == 1){
+    setLocation(2785, 1990);
+    }
+    else if (checkpoint == 2){
+    setLocation(500, 500);
+    }
+    else if (checkpoint == 3){
+    setLocation(500, 500);
+    }
+    else if (checkpoint == 4){
+    setLocation(500, 500);
     }
     else
     {
-    setLocation(142,5473);
+    setLocation(87, 2890);
 }
-    
 }
+levens = levens -1;
+levens = levens + 0.5;
+}
+//checkpoint waardes aangeven
+public void checkpoints()
+{
+    if(isTouching(Checkpoint.class))
+    {
+        checkpoint = 1;
+    }
+    if(isTouching(Checkpoint2.class))
+    {
+        checkpoint = 2;
+    }
+    if(isTouching(Checkpoint3.class))
+    {
+        checkpoint = 3;
+    }
+    if(isTouching(Checkpoint4.class))
+    {
+        checkpoint = 4;
+    }
+    }
+    //levens
+   public double hearts(){
+       levens = levens;
+       return levens;
+       
+       
+    }
+//de death methode zodat alles onder 1 ding valt
 public void Death()
 {
     if (isTouching(LavaTile.class))
@@ -183,17 +255,20 @@ public void Death()
         respawn();
     }
 }
+//checkpoint1 methode voor de checkpoint
 public void  checkpoint1()
     {
         setLocation(142,5473);
         
     }
+    // positie methode voor informatie doorgeven
     public String positie()
     {
     String a= "X"+getX()+"Y"+getY();    
     
     return a;
     }
+    //checkpoint methode om achter de coordinaten te komen
     public void checkpoint()
     {
         if (isTouching(Checkpoint.class))
@@ -203,8 +278,19 @@ public void  checkpoint1()
         
         }
     }
-
-
+//methode om coins weg te halen
+    public int  eatCoins()
+        {
+       Actor Coin = getOneIntersectingObject(Coin.class);
+       if(isTouching(Coin.class))
+            {
+        removeTouching(Coin.class);
+        munten = munten + 1;
+        
+        }
+          return munten;
+        }
+//methode om de knoppen van het toetsenboord te controleren
         public void checkKeys()
 {
     isKeyPressed = false;
@@ -225,6 +311,10 @@ public void  checkpoint1()
         setLocation (getX()-speed, getY());
         isKeyPressed = true;
     }
+    else if (Greenfoot.isKeyDown("spacebar"))
+    {
+        respawn();
+    }
     if (!(isKeyPressed))
     {
         stoplopen();
@@ -233,10 +323,14 @@ public void  checkpoint1()
 
 public boolean openDeur1()
     {
-        if (key==true && isTouching(Door.class))
+        if (isTouching(Deur1.class))
         {
             openDeur1 = true;
-            setLocation(142, 5473);
+            Greenfoot.setWorld(new Level2());
+        }
+            if ( isTouching(Deur2.class))
+        {
+            Greenfoot.setWorld(new Einde());
         }
         return openDeur1;
         
@@ -257,11 +351,23 @@ public boolean onGround()
     return tile != null && tile.isSolid == true; 
 } 
 
+public void removeBadGuy()
+      {
+            if(isTouching(BadGuy.class)) 
+            {
+                    removeTouching(BadGuy.class); 
+		    removedBadGuy=true;
+
+                    
+                return;
+                }
+        }
+
 
 
 
 public void handleInput() {
-    if ((Greenfoot.isKeyDown("w") && onGround() == true ) ||(Greenfoot.isKeyDown("w") && isTouching(Ladder.class)) || (Greenfoot.isKeyDown("w") &&  isTouching(RopeAttached.class)) || (Greenfoot.isKeyDown("w") && isTouching(RopeVertical.class)))
+    if ((Greenfoot.isKeyDown("w") && onGround() == true ) ||(Greenfoot.isKeyDown("w") && isTouching(JumpTile.class)))
     
         {
         setImage("springen.png");
