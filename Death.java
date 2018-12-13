@@ -13,8 +13,5 @@ public class Death extends Tile
         super(image, width, heigth);
     
 }
-    public void act() 
-    {
-        // Add your action code here.
-    }    
+    
 }

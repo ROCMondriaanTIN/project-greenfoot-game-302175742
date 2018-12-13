@@ -56,13 +56,14 @@ public  boolean key = false;
 public boolean door = false;
 public  boolean openDeur1 = false;
 public  boolean touchDeur1 = false;
-public static double levens = 2;
+public  double levens = 2;
 public static int munten;
 public boolean munten2;
 public String worldName;
 boolean isDood=false;
 boolean removedBadGuy=false;
 public String actieveWereld;
+
 
 public Hero() {
     super();
@@ -124,6 +125,7 @@ public void act() {
     applyVelocity();
     openDeur1();
     eatCoins();
+    eatKeys();
     
     
    
@@ -190,30 +192,35 @@ public void wereld()
 public  void respawn()
 {
     
-    if (levens == 0 )
+    if (levens == 1 )
     {
         Greenfoot.setWorld(new GameOver());
     }
-    else {
+    
+   
     if(checkpoint == 1){
     setLocation(2785, 1990);
+    levens --;
     }
     else if (checkpoint == 2){
     setLocation(500, 500);
+    levens --;
     }
     else if (checkpoint == 3){
     setLocation(500, 500);
+    levens --;
     }
     else if (checkpoint == 4){
     setLocation(500, 500);
+    levens --;
     }
     else
     {
     setLocation(87, 2890);
+    levens --;
 }
-}
-levens = levens -1;
-levens = levens + 0.5;
+
+
 }
 //checkpoint waardes aangeven
 public void checkpoints()
@@ -255,12 +262,7 @@ public void Death()
         respawn();
     }
 }
-//checkpoint1 methode voor de checkpoint
-public void  checkpoint1()
-    {
-        setLocation(142,5473);
-        
-    }
+
     // positie methode voor informatie doorgeven
     public String positie()
     {
@@ -268,16 +270,8 @@ public void  checkpoint1()
     
     return a;
     }
-    //checkpoint methode om achter de coordinaten te komen
-    public void checkpoint()
-    {
-        if (isTouching(Checkpoint.class))
-        {
-        x=getX();
-        y=getY();
-        
-        }
-    }
+    
+    
 //methode om coins weg te halen
     public int  eatCoins()
         {
@@ -290,6 +284,19 @@ public void  checkpoint1()
         }
           return munten;
         }
+        
+        public void  eatKeys()
+        {
+       Actor Key = getOneIntersectingObject(Keys.class);
+       if(isTouching(Keys.class))
+            {
+        removeTouching(Keys.class);
+        key = true;
+        
+        }
+          
+        }
+        
 //methode om de knoppen van het toetsenboord te controleren
         public void checkKeys()
 {
@@ -311,7 +318,7 @@ public void  checkpoint1()
         setLocation (getX()-speed, getY());
         isKeyPressed = true;
     }
-    else if (Greenfoot.isKeyDown("spacebar"))
+    else if (Greenfoot.isKeyDown("space"))
     {
         respawn();
     }
@@ -320,10 +327,10 @@ public void  checkpoint1()
         stoplopen();
     }
 }
-
+//de methode van de deuren
 public boolean openDeur1()
     {
-        if (isTouching(Deur1.class))
+        if (isTouching(Deur1.class) && (key = true))
         {
             openDeur1 = true;
             Greenfoot.setWorld(new Level2());
@@ -339,33 +346,29 @@ public boolean openDeur1()
     
     
 }
-public boolean getOpenDeur()
-     {
-         return openDeur1;
-        }
-        
+// de methode zodat je niet konstant kan springen
 public boolean onGround()
 {
     Actor under = getOneObjectAtOffset (0, getHeight ()/2, Tile.class);
     Tile tile = (Tile) under;
     return tile != null && tile.isSolid == true; 
 } 
-
+// de methode om de badguy weg te halen
 public void removeBadGuy()
       {
             if(isTouching(BadGuy.class)) 
             {
                     removeTouching(BadGuy.class); 
-		    removedBadGuy=true;
+            removedBadGuy=true;
 
                     
-                return;
+                    return;
                 }
         }
 
 
 
-
+// de methode voor de jump
 public void handleInput() {
     if ((Greenfoot.isKeyDown("w") && onGround() == true ) ||(Greenfoot.isKeyDown("w") && isTouching(JumpTile.class)))
     
@@ -392,7 +395,7 @@ public void handleInput() {
     public int getHeight() {
         return getImage().getHeight();
     }
- 
+ // de methode voor de animatie
         public void walkRight()
     {
         lopen = true;
@@ -448,7 +451,7 @@ public void handleInput() {
             return;
         }
     }
-    
+    // de andere methode voor de animatie
     public void walkLeft()
     {
         lopen = true;
@@ -505,7 +508,7 @@ public void handleInput() {
             return;
         }
     }
- 
+    // een methode om te stoppen met lopen
     public void stoplopen()
     {
         lopen = false;
@@ -515,7 +518,7 @@ public void handleInput() {
             setImage (LMidle);
         }
         
-    
+    // een methode om achter je positie te komen
  public String position()
  {
  String a= "x" +getX()+"y"+getY();
